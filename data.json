@@ -1,25 +1,25 @@
 {
-	"name":"root"
-	"color":"#ccffcc"
-	"shape":"circle"
-	"image":""
-	"categories":[]
+	"name":"root",
+	"color":"#ccffcc",
+	"shape":"circle",
+	"image":"",
+	"categories":[],
 	"children": 
 	[ 
 		{
-			"name":"A"
-			"color":"#ccffcc"
-			"shape":"circle"
-			"image":""
-			"categories":[]
+			"name":"A",
+			"color":"#ccffcc",
+			"shape":"circle",
+			"image":"",
+			"categories":[],
 			"children": 
 			[
 				{
-					"name":"A1"
-					"color":"#ccffcc"
-					"shape":"circle"
-					"image":""
-					"categories":[]
+					"name":"A1",
+					"color":"#ccffcc",
+					"shape":"circle",
+					"image":"",
+					"categories":[],
 					"children": 
 					[
 
@@ -27,11 +27,11 @@
 					]
 				},
 				{
-					"name":"A2"
-					"color":"#ccffcc"
-					"shape":"circle"
-					"image":""
-					"categories":[]
+					"name":"A2",
+					"color":"#ccffcc",
+					"shape":"circle",
+					"image":"",
+					"categories":[],
 					"children": 
 					[
 
@@ -42,19 +42,19 @@
 			]
 		},
 		{
-			"name":"B"
-			"color":"#ccffcc"
-			"shape":"circle"
-			"image":""
-			"categories":[]
+			"name":"B",
+			"color":"#ccffcc",
+			"shape":"circle",
+			"image":"",
+			"categories":[],
 			"children": 
 			[
 				{
-					"name":"B1"
-					"color":"#ccffcc"
-					"shape":"circle"
-					"image":""
-					"categories":[]
+					"name":"B1",
+					"color":"#ccffcc",
+					"shape":"circle",
+					"image":"",
+					"categories":[],
 					"children": 
 					[
 
@@ -62,11 +62,11 @@
 					]
 				},
 				{
-					"name":"B2"
-					"color":"#ccffcc"
-					"shape":"circle"
-					"image":""
-					"categories":[]
+					"name":"B2",
+					"color":"#ccffcc",
+					"shape":"circle",
+					"image":"",
+					"categories":[],
 					"children": 
 					[
 
