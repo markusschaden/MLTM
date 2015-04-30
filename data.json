@@ -1,0 +1,81 @@
+{
+	"name":"root"
+	"color":"#ccffcc"
+	"shape":"circle"
+	"image":""
+	"categories":[]
+	"children": 
+	[ 
+		{
+			"name":"A"
+			"color":"#ccffcc"
+			"shape":"circle"
+			"image":""
+			"categories":[]
+			"children": 
+			[
+				{
+					"name":"A1"
+					"color":"#ccffcc"
+					"shape":"circle"
+					"image":""
+					"categories":[]
+					"children": 
+					[
+
+
+					]
+				},
+				{
+					"name":"A2"
+					"color":"#ccffcc"
+					"shape":"circle"
+					"image":""
+					"categories":[]
+					"children": 
+					[
+
+
+					]
+				}
+
+			]
+		},
+		{
+			"name":"B"
+			"color":"#ccffcc"
+			"shape":"circle"
+			"image":""
+			"categories":[]
+			"children": 
+			[
+				{
+					"name":"B1"
+					"color":"#ccffcc"
+					"shape":"circle"
+					"image":""
+					"categories":[]
+					"children": 
+					[
+
+
+					]
+				},
+				{
+					"name":"B2"
+					"color":"#ccffcc"
+					"shape":"circle"
+					"image":""
+					"categories":[]
+					"children": 
+					[
+
+
+					]
+				}
+
+			]
+		}
+	]
+	
+}
