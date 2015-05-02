@@ -3,7 +3,6 @@ var mltms = new Array();
 function MLTM(tag) {
   this.tag = tag;
 
-  this.usescaling = true;
   this.selectedNodes = new Array();
 
   var maxsize;
@@ -27,20 +26,10 @@ function MLTM(tag) {
   var limit;
   this.__defineGetter__("limit", function() { return limit; });
   this.__defineSetter__("limit", function(value) {
-    if (value > maxlimit)
-      console.log("limit can't be bigger than "+maxlimit+" with current settings.");
-    else {
-      limit = value;
-      recalcValues();
-    }
-  });
-
-  var maxlimit;
-  this.__defineGetter__("maxlimit", function() { return maxlimit; });
-
-  var sizes;
-  this.__defineGetter__("sizes", function() {
-    return sizes;
+      if (value >= 0) {
+        limit = value;
+        recalcValues();
+      }
   });
 
   var distances;
@@ -48,9 +37,14 @@ function MLTM(tag) {
     return distances;
   });
 
-  var maxControlSize;
-  this.__defineGetter__("maxControlSize", function() {
-    return maxControlSize;
+  var innersizes;
+  this.__defineGetter__("innersizes", function() {
+    return innersizes;
+  });
+
+  var outersizes;
+  this.__defineGetter__("outersizes", function() {
+    return outersizes;
   });
 
   function init() {
@@ -61,26 +55,22 @@ function MLTM(tag) {
   }
 
   function recalcValues() {
-    maxlimit = 0;
-    sizes = new Array();
-    maxControlSize = 0;
-    while ((size = calcSize(maxlimit)) > 0 && maxlimit < 100) {
-      sizes.push(size);
-      if (maxlimit < limit)
-        maxControlSize += Math.pow(2,maxlimit)*size;
-      maxlimit++;
+    innersizes = [maxsize];
+    outersizes = new Array();
+    for (var i = 0; i < limit; i++) {
+      outersizes.push(((i > 0) ? outersizes[i-1] : 0)+Math.pow(2,i)*innersizes[i]);
+      innersizes[i+1] = innersizes[i]-innersizes[i]*proportion
     }
 
-    distances = [maxControlSize];
-    for (var i = 0; i < limit; i++)
-      distances.push(distances[i]/2);
+    distances = new Array();
+    for (var i = limit-1; i >= 0; i--)
+      distances.push((outersizes[i]-maxsize)/4+maxsize/2);
 
     console.log("maxsize: "+maxsize);
     console.log("proportion: "+proportion);
     console.log("limit: "+limit);
-    console.log("maxlimit: "+maxlimit);
-    console.log("maxControlSize: "+maxControlSize);
-    console.log("sizes: "+sizes);
+    console.log("innersizes: "+innersizes);
+    console.log("outersizes: "+outersizes);
     console.log("distances: "+distances);
   }
 
@@ -95,7 +85,6 @@ function Node(tag, mltm) {
   this.tag = tag;
   this.mltm = mltm;
 
-  this.size = 1.0;
   this.collapsed = false;
 }
 
@@ -109,38 +98,50 @@ function updateSelectedNode(index, mltm) {
     left: Math.round(width/2-mltm.maxsize/2)+"px",
   });
   var maxsize = mltm.maxsize;
-  if (mltm.usescaling) {
-    node.size = 1;
+  node.tag.velocity({
+    width: maxsize+"px",
+    height: maxsize+"px",
+    scaleX: 1,
+    scaleY: 1
+  }, { queue: false });
+  var sub = 0;
+  if (sub >= node.mltm.limit) {
+    node.tag.velocity("fadeOut", { queue: false });
     node.tag.velocity({
-      width: maxsize+"px",
-      height: maxsize+"px",
-      scaleX: node.size,
-      scaleY: node.size
+      scaleX: 0,
+      scaleY: 0
     }, { queue: false });
-  }
+  } else if (!node.tag.is(":visible"))
+    node.tag.velocity("fadeIn", { queue: false });
   var nodes = node.tag.children("[node]");
   for (var i = 0; i < nodes.length; i++)
-    updateNodes(i, nodes[i], nodes.length, 1);
+    updateNodes(i, nodes[i], nodes.length, sub+1);
 }
 
 function updateNodes(index, tag, count, sub) {
   var node = $(tag).data("node");
-  var x = Math.cos(((360/count)*(index+1))* Math.PI / 180.0)*node.mltm.distances[sub];
-  var y = Math.sin(((360/count)*(index+1))* Math.PI / 180.0)*node.mltm.distances[sub];
+  var x = Math.cos(((360/count)*(index+1))* Math.PI / 180.0)*node.mltm.distances[sub-1];
+  var y = Math.sin(((360/count)*(index+1))* Math.PI / 180.0)*node.mltm.distances[sub-1];
   node.tag.velocity({
     top: y+"px",
     left: x+"px",
   });
   var maxsize = node.mltm.maxsize;
-  if (node.mltm.usescaling) {
-    node.size = 1-node.mltm.proportion;
+  node.tag.velocity({
+    width: maxsize+"px",
+    height: maxsize+"px",
+    scaleX: 1-node.mltm.proportion,
+    scaleY: 1-node.mltm.proportion
+  }, { queue: false });
+  if (sub >= node.mltm.limit) {
+    node.tag.velocity("fadeOut", { queue: false });
     node.tag.velocity({
-      width: maxsize+"px",
-      height: maxsize+"px",
-      scaleX: node.size,
-      scaleY: node.size
+      scaleX: 0,
+      scaleY: 0
     }, { queue: false });
-  }
+  } else if (!node.tag.is(":visible"))
+    node.tag.velocity("fadeIn", { queue: false });
+
   var nodes = node.tag.children("[node]");
   for (var i = 0; i < nodes.length; i++)
     updateNodes(i, nodes[i], nodes.length, sub+1);
