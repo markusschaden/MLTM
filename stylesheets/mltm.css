@@ -2,7 +2,7 @@
   position: relative;
 }
 
-[node] {
+[nodevalue] {
   position: absolute;
 }
 
@@ -13,12 +13,12 @@
   min-width: 600px;
 }
 
-[node] {
+[nodevalue] {
   border-radius: 50%;
   background-color: #ccffcc;
 }
 
-[node] > div:first-child {
+[nodevalue] > div:first-child {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -31,12 +31,12 @@
   height: 100%;
 }
 
-[node] * img {
+[nodevalue] * img {
   display: block;
   margin: 0 auto;
 }
 
-[node] * p {
+[nodevalue] * p {
   margin: 0;
   text-align: center;
   text-overflow: ellipsis;
