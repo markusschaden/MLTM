@@ -128,6 +128,7 @@ function updateSelectedNode(index, mltm) {
     }, { queue: false });
   } else if (!node.valueTag.is(":visible"))
     node.valueTag.velocity("fadeIn", { queue: false });
+
   var nodes = node.tag.children("[node]");
   for (var i = 0; i < nodes.length; i++)
     updateNodes(i, nodes[i], nodes.length, node);
@@ -135,8 +136,12 @@ function updateSelectedNode(index, mltm) {
 
 function updateNodes(index, tag, count, parent) {
   var node = $(tag).data("node");
-  node.x = parent.x+Math.cos(((360/count)*(index+1))* Math.PI / 180.0)*node.mltm.distances[node.sub-1];
-  node.y = parent.y+Math.sin(((360/count)*(index+1))* Math.PI / 180.0)*node.mltm.distances[node.sub-1];
+  node.x = parent.x;
+  node.y = parent.y;
+  if (node.sub < node.mltm.limit) {
+    node.x += Math.cos(((360/count)*(index+1))* Math.PI / 180.0)*node.mltm.distances[node.sub-1];
+    node.y += Math.sin(((360/count)*(index+1))* Math.PI / 180.0)*node.mltm.distances[node.sub-1];
+  }
   node.valueTag.velocity({
     top: node.y+"px",
     left: node.x+"px",
