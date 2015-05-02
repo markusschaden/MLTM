@@ -99,7 +99,7 @@ function Node(tag, mltm) {
   this.collapsed = false;
 }
 
-function positionSelectedNode(index, mltm) {
+function updateSelectedNode(index, mltm) {
   var node = mltm.selectedNodes[0];
   if (!node) node = $(mltm.tag.children("[node]")[0]).data("node");
   var height = mltm.tag.height();
@@ -108,12 +108,22 @@ function positionSelectedNode(index, mltm) {
     top: Math.round(height/2-mltm.maxsize/2)+"px",
     left: Math.round(width/2-mltm.maxsize/2)+"px",
   });
+  var maxsize = mltm.maxsize;
+  if (mltm.usescaling) {
+    node.size = 1;
+    node.tag.velocity({
+      width: maxsize+"px",
+      height: maxsize+"px",
+      scaleX: node.size,
+      scaleY: node.size
+    }, { queue: false });
+  }
   var nodes = node.tag.children("[node]");
   for (var i = 0; i < nodes.length; i++)
-    positionNodes(i, nodes[i], nodes.length, 1);
+    updateNodes(i, nodes[i], nodes.length, 1);
 }
 
-function positionNodes(index, tag, count, sub) {
+function updateNodes(index, tag, count, sub) {
   var node = $(tag).data("node");
   var x = Math.cos(((360/count)*(index+1))* Math.PI / 180.0)*node.mltm.distances[sub];
   var y = Math.sin(((360/count)*(index+1))* Math.PI / 180.0)*node.mltm.distances[sub];
@@ -121,44 +131,19 @@ function positionNodes(index, tag, count, sub) {
     top: y+"px",
     left: x+"px",
   });
-  var nodes = node.tag.children("[node]");
-  for (var i = 0; i < nodes.length; i++)
-    positionNodes(i, nodes[i], nodes.length, sub+1);
-}
-
-function sizeSelectedNode(index, mltm) {
-  var node = mltm.selectedNodes[0];
-  if (!node) node = $(mltm.tag.children("[node]")[0]).data("node");
-  var maxsize = mltm.maxsize;
-  node.size = 1;
-  if (mltm.usescaling) {
+  var maxsize = node.mltm.maxsize;
+  if (node.mltm.usescaling) {
+    node.size = 1-node.mltm.proportion;
     node.tag.velocity({
       width: maxsize+"px",
       height: maxsize+"px",
       scaleX: node.size,
       scaleY: node.size
-    });
+    }, { queue: false });
   }
   var nodes = node.tag.children("[node]");
   for (var i = 0; i < nodes.length; i++)
-    sizeNodes(i, nodes[i], nodes.length, node);
-}
-
-function sizeNodes(index, tag, count, parent) {
-  var node = $(tag).data("node");
-  var maxsize = node.mltm.maxsize;
-  node.size = parent.size;
-  if (node.mltm.usescaling) {
-    node.tag.velocity({
-      width: maxsize+"px",
-      height: maxsize+"px",
-      scaleX: node.size-node.mltm.proportion,
-      scaleY: node.size-node.mltm.proportion
-    });
-  }
-  var nodes = node.tag.children("[node]");
-  for (var i = 0; i < nodes.length; i++)
-    sizeNodes(i, nodes[i], nodes.length, node);
+    updateNodes(i, nodes[i], nodes.length, sub+1);
 }
 
 $(document).ready(function() {
@@ -181,32 +166,6 @@ $(document).ready(function() {
       initNodes(nodes[i], mltm);
   }
 
-  /*function nodeSearch(index, object) {
-    var nodeTag = $(object);
-    var parent = $(nodeTag.parent());
-    nodeTag.data("mltm", parent.data("mltm"));
-    nodeTag.data("sub", parent.data("sub")+1);
-    if (nodeTag.data("node") === undefined) nodeTag.data("node", new Node(nodeTag));
-    nodeTag.css("position", "absolute");
-    if (parent) {
-
-    } else {
-    var height = parent.height();
-    var width = parent.width();
-    nodeTag.velocity({
-      top: Math.round(height/2-size/2)+"px",
-      left: Math.round(width/2-size/2)+"px",
-    });
-    var size = calculateSize(nodeTag.data("mltm"), nodeTag.data("sub"));
-    nodeTag.velocity({
-      width: size+"px",
-      height: size+"px",
-    });
-    var nodes = nodeTag.children("[node]");
-    $.each(nodes,nodeSearch);
-  }*/
-
   $.each($.find("[mltm]"),initMLTMs);
-  $.each(mltms, positionSelectedNode);
-  $.each(mltms, sizeSelectedNode);
+  $.each(mltms, updateSelectedNode);
 });

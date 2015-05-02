@@ -57,8 +57,7 @@
               function calcultedValues() {
                 $("#maxlimit").text($($("[mltm]")[0]).data("mltm").maxlimit);
 
-                $.each(mltms, positionSelectedNode);
-                $.each(mltms, sizeSelectedNode);
+                $.each(mltms, updateSelectedNode);
               }
             });
           </script>
