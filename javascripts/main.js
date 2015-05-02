@@ -3,11 +3,92 @@ var mltms = new Array();
 function MLTM(tag) {
   this.tag = tag;
 
-  this.maxsize = 80;
-  this.proportion = 0.25;
-  this.limit = 3;
   this.usescaling = true;
   this.selectedNodes = new Array();
+
+  var maxsize;
+  this.__defineGetter__("maxsize", function() { return maxsize; });
+  this.__defineSetter__("maxsize", function(value) {
+    if (value > 0) {
+      maxsize = value;
+      recalcValues();
+    }
+  });
+
+  var proportion;
+  this.__defineGetter__("proportion", function() { return proportion; });
+  this.__defineSetter__("proportion", function(value) {
+    if (value < 1 && value >= 0) {
+      proportion = value;
+      recalcValues();
+    }
+  });
+
+  var limit;
+  this.__defineGetter__("limit", function() { return limit; });
+  this.__defineSetter__("limit", function(value) {
+    if (value > maxlimit)
+      console.log("limit can't be bigger than "+maxlimit+" with current settings.");
+    else {
+      limit = value;
+      recalcValues();
+    }
+  });
+
+  var maxlimit;
+  this.__defineGetter__("maxlimit", function() { return maxlimit; });
+
+  var sizes;
+  this.__defineGetter__("sizes", function() {
+    return sizes;
+  });
+
+  var distances;
+  this.__defineGetter__("distances", function() {
+    return distances;
+  });
+
+  var maxControlSize;
+  this.__defineGetter__("maxControlSize", function() {
+    return maxControlSize;
+  });
+
+  function init() {
+    maxsize = 100;
+    proportion = 0.20;
+    limit = 3;
+    recalcValues();
+  }
+
+  function recalcValues() {
+    maxlimit = 0;
+    sizes = new Array();
+    maxControlSize = 0;
+    while ((size = calcSize(maxlimit)) > 0 && maxlimit < 100) {
+      sizes.push(size);
+      if (maxlimit < limit)
+        maxControlSize += Math.pow(2,maxlimit)*size;
+      maxlimit++;
+    }
+
+    distances = [maxControlSize];
+    for (var i = 0; i < limit; i++)
+      distances.push(distances[i]/2);
+
+    console.log("maxsize: "+maxsize);
+    console.log("proportion: "+proportion);
+    console.log("limit: "+limit);
+    console.log("maxlimit: "+maxlimit);
+    console.log("maxControlSize: "+maxControlSize);
+    console.log("sizes: "+sizes);
+    console.log("distances: "+distances);
+  }
+
+  function calcSize(sub) {
+    return maxsize-sub*maxsize*proportion;
+  }
+
+  init();
 }
 
 function Node(tag, mltm) {
@@ -18,8 +99,66 @@ function Node(tag, mltm) {
   this.collapsed = false;
 }
 
-function calculateSize(mltm, sub) {
-  return mltm.maxsize-(sub-1)*mltm.maxsize*mltm.proportion;
+function positionSelectedNode(index, mltm) {
+  var node = mltm.selectedNodes[0];
+  if (!node) node = $(mltm.tag.children("[node]")[0]).data("node");
+  var height = mltm.tag.height();
+  var width = mltm.tag.width();
+  node.tag.velocity({
+    top: Math.round(height/2-mltm.maxsize/2)+"px",
+    left: Math.round(width/2-mltm.maxsize/2)+"px",
+  });
+  var nodes = node.tag.children("[node]");
+  for (var i = 0; i < nodes.length; i++)
+    positionNodes(i, nodes[i], nodes.length, 1);
+}
+
+function positionNodes(index, tag, count, sub) {
+  var node = $(tag).data("node");
+  var x = Math.cos(((360/count)*(index+1))* Math.PI / 180.0)*node.mltm.distances[sub];
+  var y = Math.sin(((360/count)*(index+1))* Math.PI / 180.0)*node.mltm.distances[sub];
+  node.tag.velocity({
+    top: y+"px",
+    left: x+"px",
+  });
+  var nodes = node.tag.children("[node]");
+  for (var i = 0; i < nodes.length; i++)
+    positionNodes(i, nodes[i], nodes.length, sub+1);
+}
+
+function sizeSelectedNode(index, mltm) {
+  var node = mltm.selectedNodes[0];
+  if (!node) node = $(mltm.tag.children("[node]")[0]).data("node");
+  var maxsize = mltm.maxsize;
+  node.size = 1;
+  if (mltm.usescaling) {
+    node.tag.velocity({
+      width: maxsize+"px",
+      height: maxsize+"px",
+      scaleX: node.size,
+      scaleY: node.size
+    });
+  }
+  var nodes = node.tag.children("[node]");
+  for (var i = 0; i < nodes.length; i++)
+    sizeNodes(i, nodes[i], nodes.length, node);
+}
+
+function sizeNodes(index, tag, count, parent) {
+  var node = $(tag).data("node");
+  var maxsize = node.mltm.maxsize;
+  node.size = parent.size;
+  if (node.mltm.usescaling) {
+    node.tag.velocity({
+      width: maxsize+"px",
+      height: maxsize+"px",
+      scaleX: node.size-node.mltm.proportion,
+      scaleY: node.size-node.mltm.proportion
+    });
+  }
+  var nodes = node.tag.children("[node]");
+  for (var i = 0; i < nodes.length; i++)
+    sizeNodes(i, nodes[i], nodes.length, node);
 }
 
 $(document).ready(function() {
@@ -40,68 +179,6 @@ $(document).ready(function() {
     var nodes = tag.children("[node]");
     for (var i = 0; i < nodes.length; i++)
       initNodes(nodes[i], mltm);
-  }
-
-  function positionSelectedNode(index, mltm) {
-    var node = mltm.selectedNodes[0];
-    if (!node) node = $(mltm.tag.children("[node]")[0]).data("node");
-    var height = mltm.tag.height();
-    var width = mltm.tag.width();
-    node.tag.velocity({
-      top: Math.round(height/2-mltm.maxsize/2)+"px",
-      left: Math.round(width/2-mltm.maxsize/2)+"px",
-    });
-    var nodes = node.tag.children("[node]");
-    for (var i = 0; i < nodes.length; i++)
-      positionNodes(i, nodes[i], nodes.length);
-  }
-
-  function positionNodes(index, tag, count) {
-    var node = $(tag).data("node");
-    var x = Math.cos(((360/count)*(index+1))* Math.PI / 180.0)*100;
-    var y = Math.sin(((360/count)*(index+1))* Math.PI / 180.0)*100;
-    node.tag.velocity({
-      top: y+"px",
-      left: x+"px",
-    });
-    var nodes = node.tag.children("[node]");
-    for (var i = 0; i < nodes.length; i++)
-      positionNodes(i, nodes[i], nodes.length);
-  }
-
-  function sizeSelectedNode(index, mltm) {
-    var node = mltm.selectedNodes[0];
-    if (!node) node = $(mltm.tag.children("[node]")[0]).data("node");
-    var maxsize = mltm.maxsize;
-    node.size = 1;
-    if (mltm.usescaling) {
-      node.tag.velocity({
-        width: maxsize+"px",
-        height: maxsize+"px",
-        scaleX: node.size,
-        scaleY: node.size
-      });
-    }
-    var nodes = node.tag.children("[node]");
-    for (var i = 0; i < nodes.length; i++)
-      sizeNodes(i, nodes[i], nodes.length, node);
-  }
-
-  function sizeNodes(index, tag, count, parent) {
-    var node = $(tag).data("node");
-    var maxsize = node.mltm.maxsize;
-    node.size = parent.size-node.mltm.proportion;
-    if (node.mltm.usescaling) {
-      node.tag.velocity({
-        width: maxsize+"px",
-        height: maxsize+"px",
-        scaleX: node.size,
-        scaleY: node.size
-      });
-    }
-    var nodes = node.tag.children("[node]");
-    for (var i = 0; i < nodes.length; i++)
-      sizeNodes(i, nodes[i], nodes.length, node);
   }
 
   /*function nodeSearch(index, object) {
