@@ -31,6 +31,11 @@
   height: 100%;
 }
 
+#cheung * [nodevalue] > div:first-child {
+  width: auto;
+  height: auto;
+}
+
 [nodevalue] * img {
   display: block;
   margin: 0 auto;

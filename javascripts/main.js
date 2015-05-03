@@ -34,11 +34,12 @@ function MLTM(tag) {
 
   var angle;
   this.__defineGetter__("angle", function() { return angle; });
-  this.__defineSetter__("angle", function(value) { if (value > 0 && value <= Math.PI*2) angle = value; });
-
-  var rotation;
-  this.__defineGetter__("rotation", function() { return rotation; });
-  this.__defineSetter__("rotation", function(value) { if (value >= 0 && value <= Math.PI*2) rotation = value; });
+  this.__defineSetter__("angle", function(value) {
+    if (value > 0 && value <= Math.PI*2) {
+      angle = value;
+      recalcValues();
+    }
+  });
 
   var extraSpace;
   this.__defineGetter__("extraSpace", function() { return extraSpace; });
@@ -48,6 +49,10 @@ function MLTM(tag) {
         recalcValues();
       }
   });
+
+  var rotation;
+  this.__defineGetter__("rotation", function() { return rotation; });
+  this.__defineSetter__("rotation", function(value) { if (value >= 0 && value <= Math.PI*2) rotation = value; });
 
   var distances;
   this.__defineGetter__("distances", function() {
@@ -78,13 +83,15 @@ function MLTM(tag) {
     innersizes = [maxsize+extraSpace];
     controlsize = 0;
     for (var i = 0; i < limit; i++) {
-      controlsize += Math.pow(2,i)*innersizes[i];
+      controlsize += innersizes[i]*((angle <= Math.PI) ? 1 : Math.pow(2,i));
       innersizes.push(innersizes[i]*proportion);
     }
 
     distances = new Array();
-    for (var i = 0; i < limit-1; i++)
-      distances.push((((i > 0) ? 2*distances[i-1]-innersizes[i-1] : controlsize)-innersizes[i])/4+innersizes[i]/2)
+    for (var i = 0; i < limit-1; i++) {
+      if (angle <= Math.PI) distances.push(innersizes[i]/2+innersizes[i+1]/2);
+      else distances.push((((i > 0) ? 2*distances[i-1]-innersizes[i-1] : controlsize)-innersizes[i])/4+innersizes[i]/2)
+    }
 
     console.log("maxsize: "+maxsize);
     console.log("proportion: "+proportion);
