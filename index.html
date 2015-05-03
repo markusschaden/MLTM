@@ -41,7 +41,7 @@
         <section id="main-content">
 
 
-          <h3>Example</h3>
+          <h3>demo</h3>
 
           <script>
             $(document).ready(function() {
@@ -50,7 +50,7 @@
                 calcultedValues();
               });
               $("#proportion").change(function() {
-                $("#mltm").data("mltm").proportion = +($(this).val())/100;
+                $("#mltm").data("mltm").proportion = (+$(this).val())/100;
                 calcultedValues();
               });
               $("#limit").change(function() {
@@ -59,6 +59,14 @@
               });
               $("#extraSpace").change(function() {
                 $("#mltm").data("mltm").extraSpace = +$(this).val();
+                calcultedValues();
+              });
+              $("#angle").change(function() {
+                $("#mltm").data("mltm").angle = (+$(this).val())*Math.PI/180;
+                calcultedValues();
+              });
+              $("#rotation").change(function() {
+                $("#mltm").data("mltm").rotation = (+$(this).val())*Math.PI/180;
                 calcultedValues();
               });
 
@@ -84,6 +92,14 @@
             <div class="ui-block-b">
               <label for="extraSpace">extra space:</label>
               <input type="range" name="extraSpace" id="extraSpace" min="0" max="300" value="50">
+            </div>
+            <div class="ui-block-a">
+              <label for="angle">angle:</label>
+              <input type="range" name="angle" id="angle" min="1" max="360" value="360">
+            </div>
+            <div class="ui-block-b">
+              <label for="rotation">rotation:</label>
+              <input type="range" name="rotation" id="rotation" min="0" max="360" value="0">
             </div>
           </div>
 

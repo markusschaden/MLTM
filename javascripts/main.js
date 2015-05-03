@@ -32,6 +32,14 @@ function MLTM(tag) {
       }
   });
 
+  var angle;
+  this.__defineGetter__("angle", function() { return angle; });
+  this.__defineSetter__("angle", function(value) { if (value > 0 && value <= Math.PI*2) angle = value; });
+
+  var rotation;
+  this.__defineGetter__("rotation", function() { return rotation; });
+  this.__defineSetter__("rotation", function(value) { if (value >= 0 && value <= Math.PI*2) rotation = value; });
+
   var extraSpace;
   this.__defineGetter__("extraSpace", function() { return extraSpace; });
   this.__defineSetter__("extraSpace", function(value) {
@@ -61,6 +69,8 @@ function MLTM(tag) {
     proportion = 0.80;
     limit = 3;
     extraSpace = 50;
+    angle = Math.PI*2;
+    rotation = 0;
     recalcValues();
   }
 
@@ -101,7 +111,8 @@ function Node(tag, valueTag, mltm, sub, parent) {
 }
 
 function calcAngle(node) {
-  return (node.pNode.cNodes.indexOf(node)+1)*Math.PI*2/(node.pNode.cNodes.length+((node.pNode.pNode) ? 1 : 0));
+  var extra = (node.pNode.pNode) ? 1 : 0;
+  return (Math.PI*2-node.mltm.angle)+((node.pNode.cNodes.indexOf(node)+1)*node.mltm.angle/(node.pNode.cNodes.length+extra));
 }
 
 function updateSelectedNode(index, mltm) {
@@ -112,8 +123,8 @@ function updateNodes(node, pastNode, sub) {
   node.angle = 0;
   if (node.pNode) {
     node.angle = calcAngle(node);
-    if (node.pNode.pNode)
-      node.angle += node.pNode.angle+Math.PI;
+    if (node.pNode.pNode) node.angle += node.pNode.angle-(Math.PI*2-node.mltm.angle)/2+Math.PI;
+    else node.angle += node.mltm.rotation+(node.mltm.angle-node.mltm.angle/node.pNode.cNodes.length)/2;
   }
   if (sub == 0) {
     node.x = Math.round(node.mltm.tag.width()/2-node.mltm.maxsize/2);
