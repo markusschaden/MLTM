@@ -3,7 +3,7 @@ var mltms = new Array();
 function MLTM(tag) {
   this.tag = tag;
 
-  this.selectedNodes = new Array();
+  this.mainNode;
 
   var maxsize;
   this.__defineGetter__("maxsize", function() { return maxsize; });
@@ -87,73 +87,60 @@ function MLTM(tag) {
   init();
 }
 
-function Node(tag, valueTag, mltm, sub) {
+function Node(tag, valueTag, mltm, sub, parent) {
   this.tag = tag;
   this.valueTag = valueTag;
   this.mltm = mltm;
   this.sub = sub;
   this.sel = sub;
-  this.collapsed = false;
+  this.pNode = parent;
+  this.cNodes = new Array();
   this.x = 0;
   this.y = 0;
+  this.angle = 0;
 }
 
-function calcSizeBySelection(node) {
-  return Math.pow(node.mltm.proportion,node.sel);
+function calcAngle(node) {
+  return (node.pNode.cNodes.indexOf(node)+1)*Math.PI*2/(node.pNode.cNodes.length+((node.pNode.pNode) ? 1 : 0));
 }
 
 function updateSelectedNode(index, mltm) {
-  var node = mltm.selectedNodes[0];
-  if (!node) node = $(mltm.tag.children("[node]")[0]).data("node");
-  var height = mltm.tag.height();
-  var width = mltm.tag.width();
-  node.x = Math.round(width/2-mltm.maxsize/2);
-  node.y = Math.round(height/2-mltm.maxsize/2);
-  node.valueTag.velocity({
-    top: node.y+"px",
-    left: node.x+"px",
-  });
-  var maxsize = mltm.maxsize;
-  node.valueTag.velocity({
-    width: maxsize+"px",
-    height: maxsize+"px",
-    scaleX: calcSizeBySelection(node),
-    scaleY: calcSizeBySelection(node)
-  }, { queue: false });
-  if (node.sub >= node.mltm.limit) {
-    node.valueTag.velocity("fadeOut", { queue: false });
-    node.valueTag.velocity({
-      scaleX: 0,
-      scaleY: 0
-    }, { queue: false });
-  } else if (!node.valueTag.is(":visible"))
-    node.valueTag.velocity("fadeIn", { queue: false });
-
-  var nodes = node.tag.children("[node]");
-  for (var i = 0; i < nodes.length; i++)
-    updateNodes(i, nodes[i], nodes.length, node);
+  updateNodes(mltm.mainNode, null, 0);
 }
 
-function updateNodes(index, tag, count, parent) {
-  var node = $(tag).data("node");
-  node.x = parent.x;
-  node.y = parent.y;
-  if (node.sub < node.mltm.limit) {
-    node.x += Math.cos(((360/count)*(index+1))* Math.PI / 180.0)*node.mltm.distances[node.sub-1];
-    node.y += Math.sin(((360/count)*(index+1))* Math.PI / 180.0)*node.mltm.distances[node.sub-1];
+function updateNodes(node, pastNode, sub) {
+  node.angle = 0;
+  if (node.pNode) {
+    node.angle = calcAngle(node);
+    if (node.pNode.pNode)
+      node.angle += node.pNode.angle+Math.PI;
   }
+  if (sub == 0) {
+    node.x = Math.round(node.mltm.tag.width()/2-node.mltm.maxsize/2);
+    node.y = Math.round(node.mltm.tag.height()/2-node.mltm.maxsize/2);
+  } else {
+    node.x = pastNode.x;
+    node.y = pastNode.y;
+    if (sub < node.mltm.limit) {
+      if (node.pNode === pastNode) {
+        node.x += Math.cos(node.angle)*node.mltm.distances[sub-1];
+        node.y += Math.sin(node.angle)*node.mltm.distances[sub-1];
+      } else if (pastNode.pNode === node) {
+        node.x += Math.cos(pastNode.angle+Math.PI)*node.mltm.distances[sub-1];
+        node.y += Math.sin(pastNode.angle+Math.PI)*node.mltm.distances[sub-1];
+      }
+    }
+  }
+  node.valueTag.css("z-index",100+sub*-1);
   node.valueTag.velocity({
     top: node.y+"px",
     left: node.x+"px",
-  });
-  var maxsize = node.mltm.maxsize;
-  node.valueTag.velocity({
-    width: maxsize+"px",
-    height: maxsize+"px",
-    scaleX: calcSizeBySelection(node),
-    scaleY: calcSizeBySelection(node)
+    width: node.mltm.maxsize+"px",
+    height: node.mltm.maxsize+"px",
+    scaleX: Math.pow(node.mltm.proportion,sub),
+    scaleY: Math.pow(node.mltm.proportion,sub)
   }, { queue: false });
-  if (node.sub >= node.mltm.limit || parent.collapsed) {
+  if (sub >= node.mltm.limit) {
     node.valueTag.velocity("fadeOut", { queue: false });
     node.valueTag.velocity({
       scaleX: 0,
@@ -162,9 +149,19 @@ function updateNodes(index, tag, count, parent) {
   } else if (!node.valueTag.is(":visible"))
     node.valueTag.velocity("fadeIn", { queue: false });
 
-  var nodes = node.tag.children("[node]");
-  for (var i = 0; i < nodes.length; i++)
-    updateNodes(i, nodes[i], nodes.length, node);
+  if (node.pNode && node.pNode !== pastNode)
+    updateNodes(node.pNode, node, sub+1);
+  for (var i = 0; i < node.cNodes.length; i++)
+    if (node.cNodes[i] !== pastNode)
+      updateNodes(node.cNodes[i], node, sub+1);
+}
+
+function rgb2hex(rgb){
+ rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+ return "#" +
+  ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+  ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+  ("0" + parseInt(rgb[3],10).toString(16)).slice(-2);
 }
 
 $(document).ready(function() {
@@ -172,23 +169,33 @@ $(document).ready(function() {
       var tag = $(this);
       var mltm = new MLTM(tag);
       mltms.push(mltm);
-      if (tag.data("mltm") === undefined) tag.data("mltm", mltm);
-      var nodes = tag.children("[node]");
-      for (var i = 0; i < nodes.length; i++)
-        initNodes(nodes[i], mltm, 0);
+      tag.data("mltm", mltm);
+      initNodes(tag.children("[node]")[0], mltm, null);
   }
 
-  function initNodes(object, mltm, sub) {
+  function initNodes(object, mltm, parent) {
     var tag = $(object);
-    var node = new Node(tag, $(tag.children("[nodevalue]")[0]), mltm, sub);
-    tag.click({mltm: mltm, node: node}, function(event) {
-      event.data.mltm.selectedNodes[0] = event.data.node;
-      $.each(mltms, updateSelectedNode);
-    });
-    if (tag.data("node") === undefined) tag.data("node", node);
+    var node = new Node(tag, $(tag.children("[nodevalue]")[0]), mltm, (parent) ? parent.sub+1 : 0, parent);
+    if (parent) parent.cNodes.push(node);
+    else mltm.mainNode = node;
+    node.valueTag.click({node: node}, reselctNodes);
+    tag.data("node", node);
     var nodes = tag.children("[node]");
     for (var i = 0; i < nodes.length; i++)
-      initNodes(nodes[i], mltm, sub+1);
+      initNodes(nodes[i], mltm, node);
+  }
+
+  function reselctNodes(event) {
+    if (event.data.node.cNodes.length)
+      event.data.node.mltm.mainNode = event.data.node;
+    else if (event.data.node.pNode) {
+      event.data.node.mltm.mainNode = event.data.node.pNode;
+      if (rgb2hex(event.data.node.valueTag.css("background-color")) == "#ccffcc")
+        event.data.node.valueTag.css("background-color","#ccccff");
+      else
+        event.data.node.valueTag.css("background-color","#ccffcc");
+    }
+    $.each(mltms, updateSelectedNode);
   }
 
   $.each($.find("[mltm]"),initMLTMs);
