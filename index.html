@@ -1,430 +1,457 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-    <!--[if lt IE 9]>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+  <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+  <![endif]-->
 
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 
-    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-    <script src="http://cdn.jsdelivr.net/velocity/1.2.2/velocity.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <script src="http://cdn.jsdelivr.net/velocity/1.2.2/velocity.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="stylesheets/mltm.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/mltm.css">
 
-    <script src="javascripts/main.js"></script>
+  <script src="javascripts/main.js"></script>
 
-    <title>Multilayer Tree Map by markusschaden</title>
-  </head>
+  <title>Multilayer Tree Map by markusschaden</title>
+</head>
 
-  <body>
-    <header>
-      <div class="inner">
-        <h1>Multilayer Tree Map</h1>
-        <h2>MLTM</h2>
-        <a href="https://github.com/markusschaden/MLTM" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
-
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <div data-role="collapsible" data-collapsed="false">
-            <h3>transportation example</h3>
-            <div id="mltm" mltm>
-              <div node>
-                <div nodevalue>
-                  <div>
-                    <img src="http://a2.mzstatic.com/us/r30/Purple1/v4/cd/8f/c9/cd8fc92c-dce7-493d-aec1-b6b9f3066601/icon128-2x.png"/>
-                    <p>transportation</p>
-                  </div>
-                </div>
-                <div node>
-                  <div nodevalue>
-                    <div>
-                      <img src="http://png-1.findicons.com/files/icons/1012/racing_cars/128/ferrari.png"/>
-                      <p>car</p>
-                    </div>
-                  </div>
-                  <div node>
-                    <div nodevalue>
-                      <div>
-                        <img src="http://www.laberra.ch/data/web/laberra2.ch/uploads//images/transport_taxi_grand.png"/>
-                        <p>taxi</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div node>
-                    <div nodevalue>
-                      <div>
-                        <img src="http://b.dryicons.com/images/icon_sets/travel_and_tourism_part_2/png/256x256/tour_bus.png"/>
-                        <p>bus</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div node>
-                  <div nodevalue>
-                    <div>
-                      <img src="http://www.w3.org/Graphics/SVG/WG/wiki/images/5/52/Dc_bike.png"/>
-                      <p>bike</p>
-                    </div>
-                  </div>
-                  <div node>
-                    <div nodevalue>
-                      <div>
-                        <img src="http://d2nvj5voq7vni.cloudfront.net/assets/hosted/account-197/motorcycle-2b53eb767075b29166bc206a8072320d.png"/>
-                        <p>motorcycle</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div node>
-                    <div nodevalue>
-                      <div>
-                        <img src="http://pngimg.com/upload/small/bicycle_PNG5367.png"/>
-                        <p>biceycle</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div node>
-                    <div nodevalue>
-                      <div>
-                        <img src="http://www.veryicon.com/icon/png/Transport/Transport%201/QuadBike.png"/>
-                        <p>quadbike</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div node>
-                  <div nodevalue>
-                    <div>
-                      <img src="http://c.dryicons.com/images/icon_sets/travel_and_tourism_part_2/png/256x256/cruise_ship.png"/>
-                      <p>ship</p>
-                    </div>
-                  </div>
-                  <div node>
-                    <div nodevalue>
-                      <div>
-                        <img src="http://i554.photobucket.com/albums/jj417/Shar_dreamer/Pirates%20Arrrrgh/Pirate-ship-1.png"/>
-                        <p>pirate ship</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div node>
-                    <div nodevalue>
-                      <div>
-                        <img src="http://globalshippingandlogisticsas.com/images/ship.png"/>
-                        <p>freighter</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div node>
-                    <div nodevalue>
-                      <div>
-                        <img src="http://icons.iconarchive.com/icons/aha-soft/transport/256/sailing-ship-icon.png"/>
-                        <p>sail ship</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div node>
-                  <div nodevalue>
-                    <div>
-                      <img src="http://www.biobor.com/images/header/icons/Plane-no-background.png"/>
-                      <p>aircraft</p>
-                    </div>
-                  </div>
-                  <div node>
-                    <div nodevalue>
-                      <div>
-                        <img src="http://icongal.com/gallery/download/186539/256/png"/>
-                        <p>jet</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div node>
-                    <div nodevalue>
-                      <div>
-                        <img src="http://www.avjobs.com/images/v_png_v5/v_collection_png/256x256/shadow/helicopter.png"/>
-                        <p>helicopter</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div node>
-                    <div nodevalue>
-                      <div>
-                        <img src="http://vignette1.wikia.nocookie.net/dragons-world/images/d/d1/Hot_Air_Balloon_with_TetherDecor.png/revision/latest?cb=20140214045720"/>
-                        <p>balloon</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div node>
-                  <div nodevalue>
-                    <div>
-                      <img src="https://cdn3.iconfinder.com/data/icons/vista-general/256/train.png"/>
-                      <p>train</p>
-                    </div>
-                  </div>
-                  <div node>
-                    <div nodevalue>
-                      <div>
-                        <img src="http://www.iconexperience.com/_img/v_collection_png/256x256/shadow/tram.png"/>
-                        <p>tram</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div data-role="collapsible" data-collapsed="false">
-            <h3>cheung example</h3>
-            <div id="cheung" mltm>
-              <div node>
-                <div nodevalue>
-                  <div>
-                    <p>Swiss Lunch</p>
-                  </div>
-                </div>
-                <div node>
-                  <div nodevalue>
-                    <div>
-                      <p>hungry</p>
-                    </div>
-                  </div>
-                  <div node>
-                    <div nodevalue>
-                      <div>
-                        <p>restaurant</p>
-                      </div>
-                    </div>
-                    <div node>
-                      <div nodevalue>
-                        <div>
-                          <p>asian</p>
-                        </div>
-                      </div>
-                      <div node>
-                        <div nodevalue>
-                          <div>
-                            <p>indian</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div node>
-                        <div nodevalue>
-                          <div>
-                            <p>japanese</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div node>
-                        <div nodevalue>
-                          <div>
-                            <p>chinese</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div node>
-                        <div nodevalue>
-                          <div>
-                            <p>thai</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div node>
-                      <div nodevalue>
-                        <div>
-                          <p>european</p>
-                        </div>
-                      </div>
-                      <div node>
-                        <div nodevalue>
-                          <div>
-                            <p>italian</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div node>
-                        <div nodevalue>
-                          <div>
-                            <p>swiss</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div node>
-                      <div nodevalue>
-                        <div>
-                          <p>american</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div node>
-                      <div nodevalue>
-                        <div>
-                          <p>others</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div node>
-                    <div nodevalue>
-                      <div>
-                        <p>take away</p>
-                      </div>
-                    </div>
-                    <div node>
-                      <div nodevalue>
-                        <div>
-                          <p>food</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div node>
-                      <div nodevalue>
-                        <div>
-                          <p>drinks</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div node>
-                      <div nodevalue>
-                        <div>
-                          <p>dessert</p>
-                        </div>
-                      </div>
-                      <div node>
-                        <div nodevalue>
-                          <div>
-                            <p>ice cream</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div node>
-                        <div nodevalue>
-                          <div>
-                            <p>dounouts</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div node>
-                        <div nodevalue>
-                          <div>
-                            <p>cake</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div node>
-                        <div nodevalue>
-                          <div>
-                            <p>pancake</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div node>
-                  <div nodevalue>
-                    <div>
-                      <p>thirsty</p>
-                    </div>
-                  </div>
-                  <div node>
-                    <div nodevalue>
-                      <div>
-                        <p>bakery</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div node>
-                    <div nodevalue>
-                      <div>
-                        <p>caffe</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div node>
-                    <div nodevalue>
-                      <div>
-                        <p>bars</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <aside id="sidebar">
-          <div data-role="collapsible" data-collapsed="false">
-            <h3>settings</h3>
-            <script>
-              $(document).ready(function() {
-                $("#maxsize").change(function() {
-                  $("#mltm").data("mltm").maxsize = +$(this).val();
-                  $("#cheung").data("mltm").maxsize = +$(this).val();
-                  calcultedValues();
-                });
-                $("#proportion").change(function() {
-                  $("#mltm").data("mltm").proportion = (+$(this).val())/100;
-                  $("#cheung").data("mltm").proportion = (+$(this).val())/100;
-                  calcultedValues();
-                });
-                $("#limit").change(function() {
-                  $("#mltm").data("mltm").limit = +$(this).val();
-                  $("#cheung").data("mltm").limit = +$(this).val();
-                  calcultedValues();
-                });
-                $("#extraSpace").change(function() {
-                  $("#mltm").data("mltm").extraSpace = +$(this).val();
-                  $("#cheung").data("mltm").extraSpace = +$(this).val();
-                  calcultedValues();
-                });
-                $("#angle").change(function() {
-                  $("#mltm").data("mltm").angle = (+$(this).val())*Math.PI/180;
-                  $("#cheung").data("mltm").angle = (+$(this).val())*Math.PI/180;
-                  calcultedValues();
-                });
-                $("#rotation").change(function() {
-                  $("#mltm").data("mltm").rotation = (+$(this).val())*Math.PI/180;
-                  $("#cheung").data("mltm").rotation = (+$(this).val())*Math.PI/180;
-                  calcultedValues();
-                });
-
-                function calcultedValues() {
-                  $.each(mltms, updateSelectedNode);
-                }
-              });
-            </script>
-            <label for="maxsize">max size:</label>
-            <input type="range" name="maxsize" id="maxsize" min="1" max="300" value="100">
-            <label for="proportion">proportion:</label>
-            <input type="range" name="proportion" id="proportion" min="1" max="100" value="80">
-            <label for="limit">limit:</label>
-            <input type="range" name="limit" id="limit" min="0" max="10" value="3">
-            <label for="extraSpace">extra space:</label>
-            <input type="range" name="extraSpace" id="extraSpace" min="0" max="300" value="50">
-            <label for="angle">angle:</label>
-            <input type="range" name="angle" id="angle" min="1" max="360" value="360">
-            <label for="rotation">rotation:</label>
-            <input type="range" name="rotation" id="rotation" min="0" max="360" value="0">
-          </div>
-        </aside>
-      </div>
+<body>
+  <header>
+    <div class="inner">
+      <h1>Multilayer Tree Map</h1>
+      <h2>MLTM</h2>
+      <a href="https://github.com/markusschaden/MLTM" class="button">
+        <small>View project on</small> GitHub</a>
     </div>
-  </body>
+  </header>
+  <div id="content-wrapper">
+    <div class="inner clearfix">
+      <section id="main-content">
+        <div data-role="collapsible" data-collapsed="false">
+          <h3>transportation example</h3>
+          <div id="mltm" mltm>
+            <div nodevalue>
+              <div>
+                <img src="http://a2.mzstatic.com/us/r30/Purple1/v4/cd/8f/c9/cd8fc92c-dce7-493d-aec1-b6b9f3066601/icon128-2x.png" />
+                <p>transportation</p>
+              </div>
+            </div>
+            <div node>
+              <div nodeconnector></div>
+              <div nodevalue>
+                <div>
+                  <img src="http://png-1.findicons.com/files/icons/1012/racing_cars/128/ferrari.png" />
+                  <p>car</p>
+                </div>
+              </div>
+              <div node>
+                <div nodeconnector></div>
+                <div nodevalue>
+                  <div>
+                    <img src="http://www.laberra.ch/data/web/laberra2.ch/uploads//images/transport_taxi_grand.png" />
+                    <p>taxi</p>
+                  </div>
+                </div>
+              </div>
+              <div node>
+                <div nodeconnector></div>
+                <div nodevalue>
+                  <div>
+                    <img src="http://b.dryicons.com/images/icon_sets/travel_and_tourism_part_2/png/256x256/tour_bus.png" />
+                    <p>bus</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div node>
+              <div nodeconnector></div>
+              <div nodevalue>
+                <div>
+                  <img src="http://www.w3.org/Graphics/SVG/WG/wiki/images/5/52/Dc_bike.png" />
+                  <p>bike</p>
+                </div>
+              </div>
+              <div node>
+                <div nodeconnector></div>
+                <div nodevalue>
+                  <div>
+                    <img src="http://d2nvj5voq7vni.cloudfront.net/assets/hosted/account-197/motorcycle-2b53eb767075b29166bc206a8072320d.png" />
+                    <p>motorcycle</p>
+                  </div>
+                </div>
+              </div>
+              <div node>
+                <div nodeconnector></div>
+                <div nodevalue>
+                  <div>
+                    <img src="http://pngimg.com/upload/small/bicycle_PNG5367.png" />
+                    <p>biceycle</p>
+                  </div>
+                </div>
+              </div>
+              <div node>
+                <div nodeconnector></div>
+                <div nodevalue>
+                  <div>
+                    <img src="http://www.veryicon.com/icon/png/Transport/Transport%201/QuadBike.png" />
+                    <p>quadbike</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div node>
+              <div nodeconnector></div>
+              <div nodevalue>
+                <div>
+                  <img src="http://c.dryicons.com/images/icon_sets/travel_and_tourism_part_2/png/256x256/cruise_ship.png" />
+                  <p>ship</p>
+                </div>
+              </div>
+              <div node>
+                <div nodeconnector></div>
+                <div nodevalue>
+                  <div>
+                    <img src="http://i554.photobucket.com/albums/jj417/Shar_dreamer/Pirates%20Arrrrgh/Pirate-ship-1.png" />
+                    <p>pirate ship</p>
+                  </div>
+                </div>
+              </div>
+              <div node>
+                <div nodeconnector></div>
+                <div nodevalue>
+                  <div>
+                    <img src="http://globalshippingandlogisticsas.com/images/ship.png" />
+                    <p>freighter</p>
+                  </div>
+                </div>
+              </div>
+              <div node>
+                <div nodeconnector></div>
+                <div nodevalue>
+                  <div>
+                    <img src="http://icons.iconarchive.com/icons/aha-soft/transport/256/sailing-ship-icon.png" />
+                    <p>sail ship</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div node>
+              <div nodeconnector></div>
+              <div nodevalue>
+                <div>
+                  <img src="http://www.biobor.com/images/header/icons/Plane-no-background.png" />
+                  <p>aircraft</p>
+                </div>
+              </div>
+              <div node>
+                <div nodeconnector></div>
+                <div nodevalue>
+                  <div>
+                    <img src="http://icongal.com/gallery/download/186539/256/png" />
+                    <p>jet</p>
+                  </div>
+                </div>
+              </div>
+              <div node>
+                <div nodeconnector></div>
+                <div nodevalue>
+                  <div>
+                    <img src="http://www.avjobs.com/images/v_png_v5/v_collection_png/256x256/shadow/helicopter.png" />
+                    <p>helicopter</p>
+                  </div>
+                </div>
+              </div>
+              <div node>
+                <div nodeconnector></div>
+                <div nodevalue>
+                  <div>
+                    <img src="http://vignette1.wikia.nocookie.net/dragons-world/images/d/d1/Hot_Air_Balloon_with_TetherDecor.png/revision/latest?cb=20140214045720" />
+                    <p>balloon</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div node>
+              <div nodeconnector></div>
+              <div nodevalue>
+                <div>
+                  <img src="https://cdn3.iconfinder.com/data/icons/vista-general/256/train.png" />
+                  <p>train</p>
+                </div>
+              </div>
+              <div node>
+                <div nodeconnector></div>
+                <div nodevalue>
+                  <div>
+                    <img src="http://www.iconexperience.com/_img/v_collection_png/256x256/shadow/tram.png" />
+                    <p>tram</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-role="collapsible" data-collapsed="false">
+          <h3>cheung example</h3>
+          <div id="cheung" mltm>
+            <div nodevalue>
+              <div>
+                <p>Swiss Lunch</p>
+              </div>
+            </div>
+            <div node>
+              <div nodevalue>
+                <div>
+                  <p>hungry</p>
+                </div>
+              </div>
+              <div node>
+                <div nodevalue>
+                  <div>
+                    <p>restaurant</p>
+                  </div>
+                </div>
+                <div node>
+                  <div nodevalue>
+                    <div>
+                      <p>asian</p>
+                    </div>
+                  </div>
+                  <div node>
+                    <div nodevalue>
+                      <div>
+                        <p>indian</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div node>
+                    <div nodevalue>
+                      <div>
+                        <p>japanese</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div node>
+                    <div nodevalue>
+                      <div>
+                        <p>chinese</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div node>
+                    <div nodevalue>
+                      <div>
+                        <p>thai</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div node>
+                  <div nodevalue>
+                    <div>
+                      <p>european</p>
+                    </div>
+                  </div>
+                  <div node>
+                    <div nodevalue>
+                      <div>
+                        <p>italian</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div node>
+                    <div nodevalue>
+                      <div>
+                        <p>swiss</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div node>
+                  <div nodevalue>
+                    <div>
+                      <p>american</p>
+                    </div>
+                  </div>
+                </div>
+                <div node>
+                  <div nodevalue>
+                    <div>
+                      <p>others</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div node>
+                <div nodevalue>
+                  <div>
+                    <p>take away</p>
+                  </div>
+                </div>
+                <div node>
+                  <div nodevalue>
+                    <div>
+                      <p>food</p>
+                    </div>
+                  </div>
+                </div>
+                <div node>
+                  <div nodevalue>
+                    <div>
+                      <p>drinks</p>
+                    </div>
+                  </div>
+                </div>
+                <div node>
+                  <div nodevalue>
+                    <div>
+                      <p>dessert</p>
+                    </div>
+                  </div>
+                  <div node>
+                    <div nodevalue>
+                      <div>
+                        <p>ice cream</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div node>
+                    <div nodevalue>
+                      <div>
+                        <p>dounouts</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div node>
+                    <div nodevalue>
+                      <div>
+                        <p>cake</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div node>
+                    <div nodevalue>
+                      <div>
+                        <p>pancake</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div node>
+              <div nodevalue>
+                <div>
+                  <p>thirsty</p>
+                </div>
+              </div>
+              <div node>
+                <div nodevalue>
+                  <div>
+                    <p>bakery</p>
+                  </div>
+                </div>
+              </div>
+              <div node>
+                <div nodevalue>
+                  <div>
+                    <p>caffe</p>
+                  </div>
+                </div>
+              </div>
+              <div node>
+                <div nodevalue>
+                  <div>
+                    <p>bars</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <aside id="sidebar">
+        <h3>settings</h3>
+        <script>
+          $(document).ready(function() {
+            $("#maxsize").change(function() {
+              $("#mltm").data("mltm").maxsize = +$(this).val();
+              $("#cheung").data("mltm").maxsize = +$(this).val();
+            });
+            $("#proportion").change(function() {
+              $("#mltm").data("mltm").proportion = (+$(this).val()) / 100;
+              $("#cheung").data("mltm").proportion = (+$(this).val()) / 100;
+            });
+            $("#limit").change(function() {
+              $("#mltm").data("mltm").limit = +$(this).val();
+              $("#cheung").data("mltm").limit = +$(this).val();
+            });
+            $("#extraSpace").change(function() {
+              $("#mltm").data("mltm").extraSpace = +$(this).val();
+              $("#cheung").data("mltm").extraSpace = +$(this).val();
+            });
+            $("#angle").change(function() {
+              $("#mltm").data("mltm").angle = (+$(this).val()) * Math.PI / 180;
+              $("#cheung").data("mltm").angle = (+$(this).val()) * Math.PI / 180;
+            });
+            $("#rotation").change(function() {
+              $("#mltm").data("mltm").rotation = (+$(this).val()) * Math.PI / 180;
+              $("#cheung").data("mltm").rotation = (+$(this).val()) * Math.PI / 180;
+            });
+            $("#duration").change(function() {
+              $("#mltm").data("mltm").duration = +$(this).val();
+              $("#cheung").data("mltm").duration = +$(this).val();
+            });
+            $("#easing").change(function() {
+              $("#mltm").data("mltm").easing = $("#easing :checked").val();
+              $("#cheung").data("mltm").easing = $("#easing :checked").val();
+            });
+          });
+        </script>
+        <label for="maxsize">max size [px]:</label>
+        <input type="range" name="maxsize" id="maxsize" min="1" max="300" value="100">
+        <label for="proportion">proportion [%]:</label>
+        <input type="range" name="proportion" id="proportion" min="1" max="100" value="80">
+        <label for="limit">limit:</label>
+        <input type="range" name="limit" id="limit" min="0" max="10" value="3">
+        <label for="extraSpace">extra space [px]:</label>
+        <input type="range" name="extraSpace" id="extraSpace" min="0" max="300" value="50">
+        <label for="angle">angle [degree]:</label>
+        <input type="range" name="angle" id="angle" min="1" max="360" value="360">
+        <label for="rotation">rotation [degree]:</label>
+        <input type="range" name="rotation" id="rotation" min="0" max="360" value="0">
+        <div data-role="collapsible" data-collapsed="true">
+          <h3>animation settings</h3>
+          <label for="duration">duration [ms]:</label>
+          <input type="range" name="duration" id="duration" min="0" max="1000" value="400">
+          <fieldset data-role="controlgroup" id="easing">
+            <legend>easing:</legend>
+            <label for="radio-choice-v-2a">ease</label>
+            <input type="radio" name="radio-choice-v-2" id="radio-choice-v-2a" value="ease">
+            <label for="radio-choice-v-2b">ease-in</label>
+            <input type="radio" name="radio-choice-v-2" id="radio-choice-v-2b" value="ease-in">
+            <label for="radio-choice-v-2c">ease-out</label>
+            <input type="radio" name="radio-choice-v-2" id="radio-choice-v-2c" value="ease-out" checked="checked">
+            <label for="radio-choice-v-2d">ease-in-out</label>
+            <input type="radio" name="radio-choice-v-2" id="radio-choice-v-2d" value="ease-in-out">
+          </fieldset>
+        </div>
+      </aside>
+    </div>
+  </div>
+</body>
+
 </html>

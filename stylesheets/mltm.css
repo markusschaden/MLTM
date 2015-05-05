@@ -6,11 +6,19 @@
   position: absolute;
 }
 
+[nodeconnector] {
+  position: absolute;
+}
+
 /* User specific */
 
 [mltm] {
-  min-height: 690px;
-  min-width: 690px;
+  min-height: 650px;
+  min-width: 100%;
+  overflow: hidden;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ddd;
 }
 
 [nodevalue] {
@@ -31,17 +39,23 @@
   height: 100%;
 }
 
-#cheung * [nodevalue] > div:first-child {
+[nodeconnector] {
+  background-color: lightblue;
+  height: 5px;
+}
+
+#cheung [nodevalue] > div:first-child {
   width: auto;
   height: auto;
 }
 
-[nodevalue] * img {
+[nodevalue] img {
   display: block;
   margin: 0 auto;
+  width: 100%;
 }
 
-[nodevalue] * p {
+[nodevalue] p {
   margin: 0;
   text-align: center;
   text-overflow: ellipsis;
