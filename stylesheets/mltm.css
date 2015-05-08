@@ -42,8 +42,14 @@
 }
 
 [nodeconnector] {
-  background-color: lightblue;
-  height: 5px;
+  /*background-color: lightblue;*/
+  height: 25px;
+}
+
+[nodeconnector] img {
+  display: block;
+  height: 100%;
+  width: 100%;
 }
 
 #cheung [nodevalue] > div:first-child {

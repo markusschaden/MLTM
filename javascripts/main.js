@@ -339,7 +339,8 @@ NodeConnector.prototype = {
     return this._length;
   },
   set length(value) {
-    if (value === "auto" || (value >= 0 && value <= 0)) this._length = value;
+    if (value === "auto" || (value >= 0 && value <= 1)) this._length = value;
+    this.build();
   }
 };
 
@@ -347,11 +348,13 @@ NodeConnector.prototype.build = function() {
   if (this.node.opNode) {
     this.nodeToUse = (this.node.opNode.pNode === this.node) ? this.node.opNode : this.node;
 
-    this.calcAngle();
-    this.calcLength();
-    this.calcPosition();
+    if (this.nodeToUse.connector.tag) {
+      this.calcAngle();
+      this.calcLength();
+      this.calcPosition();
 
-    this.draw();
+      this.draw();
+    }
   }
 };
 
@@ -369,25 +372,23 @@ NodeConnector.prototype.calcLength = function() {
 };
 
 NodeConnector.prototype.calcPosition = function() {
-  this.y = this.nodeToUse.y + this.mltm.maxsize / 2 + Math.sin(this.nodeToUse.angle + Math.PI) * this.lengthCalced / 2 + ((this.length === "auto") ? (Math.cos(this.nodeToUse.angle + Math.PI / 2) * this.nodeToUse.width / 2) : 0);
-  this.x = this.nodeToUse.x + this.mltm.maxsize / 2 + ((Math.cos(this.nodeToUse.angle + Math.PI) * this.lengthCalced) - this.lengthCalced) / 2 - ((this.length === "auto") ? (Math.sin(this.nodeToUse.angle + Math.PI / 2) * this.nodeToUse.width / 2) : 0);
+  this.y = this.nodeToUse.y + this.mltm.maxsize / 2 + Math.sin(this.nodeToUse.angle + Math.PI) * this.lengthCalced / 2 - this.nodeToUse.connector.tag.height() / 2 + ((this.length === "auto") ? (Math.cos(this.nodeToUse.angle + Math.PI / 2) * this.nodeToUse.width / 2) : Math.cos(this.nodeToUse.angle + Math.PI / 2) * (this.node.distanceCalced - this.lengthCalced) / 2);
+  this.x = this.nodeToUse.x + this.mltm.maxsize / 2 + ((Math.cos(this.nodeToUse.angle + Math.PI) * this.lengthCalced) - this.lengthCalced) / 2 - ((this.length === "auto") ? (Math.sin(this.nodeToUse.angle + Math.PI / 2) * this.nodeToUse.width / 2) : Math.sin(this.nodeToUse.angle + Math.PI / 2) * (this.node.distanceCalced - this.lengthCalced) / 2);
 };
 
 NodeConnector.prototype.draw = function() {
-  if (this.nodeToUse.connector.tag) {
-    this.nodeToUse.connector.tag.css("z-index", this.mltm.zIndex + this.mltm.limit + this.node.level * -1 - 1);
-    this.nodeToUse.connector.tag.velocity({
-      top: this.y + "px",
-      left: this.x + "px",
-      width: this.lengthCalced + "px",
-      rotateZ: this.angle + "deg",
-      scaleY: this.nodeToUse.pNode.proportion
-    }, this.mltm.velocityProps);
-    if (!this.lengthCalced)
-      this.nodeToUse.connector.tag.velocity("fadeOut", this.mltm.velocityProps);
-    else if (!this.nodeToUse.connector.tag.is(":visible"))
-      this.nodeToUse.connector.tag.velocity("fadeIn", this.mltm.velocityProps);
-  }
+  this.nodeToUse.connector.tag.css("z-index", this.mltm.zIndex + this.mltm.limit + this.node.level * -1 - 1);
+  this.nodeToUse.connector.tag.velocity({
+    top: this.y + "px",
+    left: this.x + "px",
+    width: this.lengthCalced + "px",
+    rotateZ: this.angle + "deg",
+    scaleY: this.nodeToUse.pNode.proportion
+  }, this.mltm.velocityProps);
+  if (!this.lengthCalced)
+    this.nodeToUse.connector.tag.velocity("fadeOut", this.mltm.velocityProps);
+  else if (!this.nodeToUse.connector.tag.is(":visible"))
+    this.nodeToUse.connector.tag.velocity("fadeIn", this.mltm.velocityProps);
 };
 
 $(document).ready(function() {
